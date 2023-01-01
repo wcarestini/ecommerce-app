@@ -1,17 +1,16 @@
-import { Context } from "../../config/Context";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+
+import { Context } from "../contexts/Context";
 
 export function Carousel() {
   const products = useContext(Context).products;
-
   const [position, setPosition] = useState(0);
 
   const SWrapper = styled.div`
     overflow: hidden;
-    width: 50%;
+    width: 100%;
   `;
-
   const SCarouselContainer = styled.div`
     position: relative;
 
@@ -49,11 +48,18 @@ export function Carousel() {
     flex: 1 0 100%;
     overflow: hidden;
     height: 50vh;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
   `;
 
   const Image = styled.img`
-    width: 100%;
-    height: 100%;
+    width: 20em;
+    height: 15em;
+
+    object-fit: fill;
   `;
 
   const SButton = styled.button`
@@ -77,7 +83,16 @@ export function Carousel() {
     right: 0;
   `;
 
-  const handleArrowClick = (direction) => {
+  const SCarouselImages = styled.div.attrs({
+    style: {
+      transform: "translateX(" + position * -100 + "%)",
+    },
+  })`
+    display: flex;
+    transition: transform 0.45s ease;
+  `;
+
+  function handleArrowClick(direction: string) {
     let newPosition = 0;
     if (direction === "NEXT") {
       newPosition = position === products.length - 1 ? 0 : position + 1;
@@ -85,24 +100,19 @@ export function Carousel() {
       newPosition = position == 0 ? products.length - 1 : position - 1;
     }
     setPosition(newPosition);
-  };
+  }
 
-  const handlePreviousClick = () => {
-    handleArrowClick("asdçfklj");
-  };
+  function handlePreviousClick() {
+    handleArrowClick("PREVIOUS");
+  }
 
-  const handleNextClick = () => {
+  function handleNextClick() {
     handleArrowClick("NEXT");
-  };
+  }
 
-  const SCarouselImages = styled.div.attrs({
-    style: {
-      transform: "translateX(" + (position * -100) + "%)",
-    },
-  })`
-    display: flex;
-    transition: transform 0.45s smooth;
-  `;
+  function handleBtnClick() {
+    console.log(products[position]);
+  }
 
   return (
     <SWrapper>
@@ -110,8 +120,9 @@ export function Carousel() {
         <SCarouselImages position={position}>
           {products.map((product) => (
             <SCarouselItem>
-              {console.log(position)}
               <Image src={product.imageUrl} alt="" />
+              <h1>{product.name}</h1>
+              <button onClick={() => handleBtnClick()}>Compra</button>
             </SCarouselItem>
           ))}
         </SCarouselImages>

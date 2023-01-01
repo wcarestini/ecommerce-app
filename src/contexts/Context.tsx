@@ -1,8 +1,7 @@
-import data from "../data/data.json";
+import data from "../../data.json";
 import React from "react";
 
-export const context = {
-  textoTest: "batatinha",
+const context = {
   products: data,
 };
 
