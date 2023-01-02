@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
 
-import { Context } from "../contexts/Context";
+import { ProductContext } from "../contexts/ProductContext";
 
 export function Carousel() {
-  const products = useContext(Context).products;
+  const { products } = useContext(ProductContext);
   const [position, setPosition] = useState(0);
 
   const SWrapper = styled.div`
@@ -43,7 +43,6 @@ export function Carousel() {
       z-index: 2;
     }
   `;
-
   const SCarouselItem = styled.div`
     flex: 1 0 100%;
     overflow: hidden;
@@ -54,14 +53,12 @@ export function Carousel() {
     justify-content: center;
     gap: 4em;
   `;
-
   const Image = styled.img`
     width: 20em;
     height: 15em;
 
     object-fit: fill;
   `;
-
   const SButton = styled.button`
     background-color: transparent;
     border: none;
@@ -74,15 +71,12 @@ export function Carousel() {
     z-index: 3;
     font-size: large;
   `;
-
   const SPreviousButton = styled(SButton)`
     left: 0;
   `;
-
   const SNextButton = styled(SButton)`
     right: 0;
   `;
-
   const SCarouselImages = styled.div.attrs({
     style: {
       transform: "translateX(" + position * -100 + "%)",
@@ -101,15 +95,12 @@ export function Carousel() {
     }
     setPosition(newPosition);
   }
-
   function handlePreviousClick() {
     handleArrowClick("PREVIOUS");
   }
-
   function handleNextClick() {
     handleArrowClick("NEXT");
   }
-
   function handleBtnClick() {
     console.log(products[position]);
   }

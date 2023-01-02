@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
 import { useContext } from "react";
-import { SearchContext } from "../contexts/SearchContext";
 
 import Router from "next/router";
+import { ProductContext } from "../contexts/ProductContext";
+import { Cart } from "./Cart";
 
 export function Header() {
-  const searchContext = useContext(SearchContext);
-  // const navigate = useNavigate();
+  const { searchProduct } = useContext(ProductContext);
 
   const SHeader = styled.header`
     height: 5rem;
-    padding: 0 4em 0 4em;
+    padding: 4rem;
 
     display: flex;
     align-items: center;
@@ -22,12 +22,22 @@ export function Header() {
   `;
   const SAside = styled.aside`
     display: flex;
-    gap: 2em;
+    gap: 2rem;
   `;
-  const SInput = styled.input``;
+  const SInput = styled.input`
+    outline: none;
+    border: none;
+    border-radius: 10px;
+
+    padding: 0.5rem;
+
+    &:hover {
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.05);
+    }
+  `;
   const SMenuHamburguer = styled.div`
-    width: 3em;
-    height: 2em;
+    width: 3rem;
+    height: 2rem;
 
     display: flex;
     flex-direction: column;
@@ -41,26 +51,26 @@ export function Header() {
   `;
 
   const handleSearchContext = (searchTerm) => {
-    searchContext.searchTerm = searchTerm;
+    searchProduct(searchTerm);
   };
   const handleChange = ({ target, key }) => {
     if (key === "Enter") {
       handleSearchContext(target.value);
-      // navigate("/product/" + target.value);
       Router.push("/product");
     }
   };
 
   return (
     <SHeader>
-      <STitle onClick={() => navigate("/")}>Logo</STitle>
+      <STitle onClick={() => Router.push("/")}>Logo</STitle>
       <SAside>
-        <SInput onKeyDown={handleChange} type="search" />
-        <SMenuHamburguer>
+        <SInput onKeyDown={handleChange} />
+        <Cart />
+        {/* <SMenuHamburguer>
           <SMenuHamburguerLine></SMenuHamburguerLine>
           <SMenuHamburguerLine></SMenuHamburguerLine>
           <SMenuHamburguerLine></SMenuHamburguerLine>
-        </SMenuHamburguer>
+        </SMenuHamburguer> */}
       </SAside>
     </SHeader>
   );
