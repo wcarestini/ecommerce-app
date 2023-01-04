@@ -1,4 +1,3 @@
-import products from "../../data.json";
 import React, {
   createContext,
   ReactNode,
@@ -7,6 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import axios from "axios";
 
 interface Product {
   name: string;
@@ -30,6 +30,7 @@ export const ProductContext = createContext({} as ProductContextData);
 export function ProductContextProvider({ children }: ProductProviderProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [product, setProduct] = useState(null);
+  const [products, setProducts] = useState([]);
   let productFind = null;
 
   function searchProduct(term: string) {

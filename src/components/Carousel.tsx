@@ -1,10 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
-import { ProductContext } from "../contexts/ProductContext";
-
-export function Carousel() {
-  const { products } = useContext(ProductContext);
+export function Carousel({ products }) {
   const [position, setPosition] = useState(0);
 
   const SWrapper = styled.div`
