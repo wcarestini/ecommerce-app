@@ -1,8 +1,9 @@
 import axios from "axios";
 import Head from "next/head";
-import { Carousel } from "../components/Carousel";
+import { CategoryCarousel } from "../components/CategoryCarousel";
+import { PrincipalSection } from "../components/PrincipalSection";
 
-export default function Home({ products }) {
+export default function Home({}) {
   return (
     <>
       <Head>
@@ -12,23 +13,24 @@ export default function Home({ products }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Carousel products={products} />
+        <PrincipalSection />
+        <CategoryCarousel category="apple" />
       </main>
     </>
   );
 }
 
-export const getStaticProps = async () => {
-  const api = axios.create({
-    baseURL: "http://0.0.0.0:8080",
-    headers: {
-      Accept: "application/json",
-    },
-  });
-  const data = await api.get("/products");
-  return {
-    props: {
-      products: data.data || [],
-    },
-  };
-};
+// export const getStaticProps = async () => {
+//   const api = axios.create({
+//     baseURL: "http://0.0.0.0:8080",
+//     headers: {
+//       Accept: "application/json",
+//     },
+//   });
+//   const data = await api.get("/products");
+//   return {
+//     props: {
+//       products: data.data || [],
+//     },
+//   };
+// };
