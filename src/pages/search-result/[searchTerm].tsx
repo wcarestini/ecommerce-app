@@ -14,15 +14,15 @@ interface Product {
 
 interface SearchResultProps {
   products: Product[];
-  message: string;
+  searchTerm: string;
 }
 
-function SearchResult({ products, message }: SearchResultProps) {
+function SearchResult({ products, searchTerm }: SearchResultProps) {
   console.log(products);
   return (
     <>
       <Head>
-        <title>E-commerce | Home</title>
+        <title>E-commerce | {searchTerm}</title>
         <meta name="description" content="E-commerce" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -58,6 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     return {
       props: {
         products: data,
+        searchTerm,
       },
     };
   } catch (e) {

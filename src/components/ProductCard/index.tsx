@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-
+import Router from "next/router";
+import { addCart } from "../../utils/SessionStorageUtil";
 import {
   AddButton,
   Container,
@@ -10,6 +11,7 @@ import {
   ProductImage,
   Title,
 } from "./styles";
+import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 
 interface ProductCardProps {
   id: number;
@@ -26,18 +28,33 @@ export function ProductCard({
   price,
   imageUrl,
 }: ProductCardProps) {
-  function handleClick() {
-    console.log(id);
+  function handleClickAddCart() {
+    addCart({ id, name: title, price, imageUrl });
+  }
+
+  function handleClickProductDetail() {
+    console.log("click product detail " + id);
+    Router.push("/product/" + id);
   }
   return (
     <Container>
-      <ProductImage src={imageUrl} />
+      <ProductImage onClick={handleClickProductDetail} src={imageUrl} />
       <InformationContainer>
-        <Title>{title.substring(0, 15)}</Title>
-        <Description>{description.substring(0, 45)}...</Description>
+        <Title onClick={handleClickProductDetail}>
+          {title.substring(0, 15)}
+        </Title>
+        <Description onClick={handleClickProductDetail}>
+          {description.substring(0, 45)}...
+        </Description>
         <PriceButtonWrapper>
           <Price>R$ {price}</Price>
-          <AddButton onClick={handleClick} />
+          <AddButton onClick={handleClickAddCart}>
+            <LocalHospitalOutlinedIcon
+              style={{
+                fontSize: "2rem",
+              }}
+            />
+          </AddButton>
         </PriceButtonWrapper>
       </InformationContainer>
     </Container>

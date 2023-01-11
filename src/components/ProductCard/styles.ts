@@ -17,15 +17,19 @@ export const Container = styled.div`
 
 export const ProductImage = styled.img`
   height: 100px;
+  cursor: pointer;
 `;
 
 export const Title = styled.h1`
   font-size: 1.5rem;
+  cursor: pointer;
 
   border-top: rgba(0, 0, 0, 25%) solid 1px;
 `;
 
-export const Description = styled.p``;
+export const Description = styled.p`
+  cursor: pointer;
+`;
 
 export const Price = styled.strong``;
 
@@ -44,9 +48,7 @@ export const PriceButtonWrapper = styled.div`
 `;
 
 export const AddButton = styled.button`
-  background: url("button-add.svg") no-repeat;
-  width: 2.5rem;
-  height: 2.5rem;
+  background: white;
   border: none;
   align-self: end;
 `;
