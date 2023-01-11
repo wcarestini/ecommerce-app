@@ -15,7 +15,8 @@ export function Header({}: HeaderProps) {
   const handleChange = ({ target, key }: any) => {
     if (key === "Enter") {
       searchProduct(target.value);
-      Router.push("/product");
+      Router.push("/search-result/" + target.value);
+      target.value = "";
     }
   };
   return (

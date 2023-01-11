@@ -6,21 +6,23 @@ export const Container = styled.div`
   background: white;
   border-radius: 5px;
   padding: 0.5rem;
+  padding-bottom: 1.2rem;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  flex-shrink: 0;
 `;
 
 export const ProductImage = styled.img`
-  width: 75%;
-  height: 60%;
-
-  border-bottom: rgba(0, 0, 0, 25%) solid 1px;
+  height: 100px;
 `;
 
 export const Title = styled.h1`
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+
+  border-top: rgba(0, 0, 0, 25%) solid 1px;
 `;
 
 export const Description = styled.p``;
@@ -29,5 +31,22 @@ export const Price = styled.strong``;
 
 export const InformationContainer = styled.div`
   align-self: flex-start;
+  min-height: 50%;
   padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const PriceButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const AddButton = styled.button`
+  background: url("button-add.svg") no-repeat;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  align-self: end;
 `;

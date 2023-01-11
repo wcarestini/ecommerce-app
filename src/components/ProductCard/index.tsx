@@ -1,24 +1,44 @@
 import { ReactNode } from "react";
 
 import {
+  AddButton,
   Container,
   Description,
   InformationContainer,
   Price,
+  PriceButtonWrapper,
   ProductImage,
   Title,
 } from "./styles";
 
-interface ProductCardProps {}
+interface ProductCardProps {
+  id: number;
+  title: string;
+  description: string;
+  price: string;
+  imageUrl: string;
+}
 
-export function ProductCard({}: ProductCardProps) {
+export function ProductCard({
+  id,
+  title,
+  description,
+  price,
+  imageUrl,
+}: ProductCardProps) {
+  function handleClick() {
+    console.log(id);
+  }
   return (
     <Container>
-      <ProductImage src="https://www.wine.com.br/cdn-cgi/image/q=99,f=png,h=176/assets-images/produtos/RHV354-01.png" />
+      <ProductImage src={imageUrl} />
       <InformationContainer>
-        <Title>Iphone</Title>
-        <Description>Iphone tri</Description>
-        <Price>R$ 2.000,00</Price>
+        <Title>{title.substring(0, 15)}</Title>
+        <Description>{description.substring(0, 45)}...</Description>
+        <PriceButtonWrapper>
+          <Price>R$ {price}</Price>
+          <AddButton onClick={handleClick} />
+        </PriceButtonWrapper>
       </InformationContainer>
     </Container>
   );

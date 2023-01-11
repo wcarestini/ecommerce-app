@@ -1,21 +1,28 @@
 import { ReactNode } from "react";
 import { ProductCard } from "../ProductCard";
 
-import { CardsContainer, Container, Title } from "./styles";
+import {
+  CardsContainer,
+  CardsContainerWrapper,
+  Container,
+  Title,
+} from "./styles";
 
 interface CategoryCarouselProps {
   category: string;
+  children: ReactNode;
 }
 
-export function CategoryCarousel({ category }: CategoryCarouselProps) {
+export function CategoryCarousel({
+  category,
+  children,
+}: CategoryCarouselProps) {
   return (
     <Container>
       <Title>{category}</Title>
-      <CardsContainer>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </CardsContainer>
+      <CardsContainerWrapper>
+        <CardsContainer>{children}</CardsContainer>
+      </CardsContainerWrapper>
     </Container>
   );
 }
