@@ -5,12 +5,14 @@ import Router from "next/router";
 import { ProductContext } from "../../contexts/ProductContext";
 import { Cart } from "../Cart";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
+import Cookies from "js-cookie";
 interface HeaderProps {
   // children: ReactNode;
 }
 
 export function Header({}: HeaderProps) {
   const { searchProduct } = useContext(ProductContext);
+  const accessToken = Cookies.get("accessToken");
 
   const handleChange = ({ target, key }: any) => {
     if (key === "Enter") {
@@ -24,6 +26,10 @@ export function Header({}: HeaderProps) {
     Router.push("/cart");
   }
 
+  function handleLogin() {
+    Router.push("/login");
+  }
+
   return (
     <Container>
       <Title onClick={() => Router.push("/")}>SHOPE</Title>
@@ -33,8 +39,7 @@ export function Header({}: HeaderProps) {
           onClick={redirectToCart}
           style={{ color: "#000000", fontSize: "2rem" }}
         />
-        {/* <Cart onClick={redirectToCart} /> */}
-        <Link onClick={() => console.log("usuario tentou logar")}>Login</Link>
+        {accessToken ? <p>Olá</p> : <Link onClick={handleLogin}>Login</Link>}
       </Aside>
     </Container>
   );

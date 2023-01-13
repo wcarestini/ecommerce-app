@@ -1,4 +1,6 @@
+import Head from "next/head";
 import styled from "styled-components";
+import { OrderResume } from "../components/OrderResume";
 import { ProductCardCart } from "../components/ProductCardCart";
 import { getCartFromSessionStorage } from "../utils/SessionStorageUtil";
 
@@ -18,18 +20,28 @@ export default function Cart() {
   const cart = getCartFromSessionStorage();
 
   return (
-    <Main>
-      <Title>Carrinho</Title>
-      {cart.map(({ imageUrl, name, price, quantity }) => {
-        return (
-          <ProductCardCart
-            imageUrl={imageUrl}
-            name={name}
-            price={price}
-            quantity={quantity}
-          />
-        );
-      })}
-    </Main>
+    <>
+      <Head>
+        <title>E-commerce | Carrinho</title>
+        <meta name="description" content="E-commerce" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Main>
+        <Title>Carrinho</Title>
+        {cart.map(({ id, imageUrl, name, price, quantity }) => {
+          return (
+            <ProductCardCart
+              id={id}
+              imageUrl={imageUrl}
+              name={name}
+              price={price}
+              quantity={quantity}
+            />
+          );
+        })}
+        <OrderResume cart={cart} />
+      </Main>
+    </>
   );
 }

@@ -33,9 +33,9 @@ export function ProductCard({
   }
 
   function handleClickProductDetail() {
-    console.log("click product detail " + id);
     Router.push("/product/" + id);
   }
+
   return (
     <Container>
       <ProductImage onClick={handleClickProductDetail} src={imageUrl} />

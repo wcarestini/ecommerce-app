@@ -23,6 +23,8 @@ export const Container = styled.div`
 export const Image = styled.img`
   height: 40%;
   width: 20%;
+
+  cursor: pointer;
 `;
 
 export const Title = styled.h1`
@@ -39,10 +41,12 @@ export const InformationContainer = styled.div`
   border-left: rgba(0, 0, 0, 25%) solid 1px;
   padding-left: 1rem;
   height: 100%;
+  width: 70%;
 
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: space-between;
   gap: 0.6rem;
 `;
 
@@ -52,6 +56,10 @@ export const QuantityWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+`;
+
+export const Wrapper = styled.div`
+  cursor: pointer;
 `;
 
 export const Button = styled.button`

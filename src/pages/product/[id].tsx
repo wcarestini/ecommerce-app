@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { addCart } from "../../utils/SessionStorageUtil";
 import {
   Button,
   ButtonsContainer,
@@ -11,6 +12,7 @@ import {
 } from "./styles";
 
 interface ProductProps {
+  id: number;
   name: string;
   price: string;
   description: string;
@@ -18,11 +20,17 @@ interface ProductProps {
 }
 
 export default function Product({
+  id,
   name,
   price,
   description,
   imageUrl,
 }: ProductProps) {
+  function handleClickAddCart() {
+    console.log("laksdjfas");
+    addCart({ id, name, price, imageUrl });
+  }
+
   return (
     <>
       <Head>
@@ -38,7 +46,7 @@ export default function Product({
           <Price>R$ {price}</Price>
           <p>{description}</p>
           <ButtonsContainer>
-            <Button>Add carrinho</Button>
+            <Button onClick={handleClickAddCart}>Add carrinho</Button>
             <Button>
               <strong>Comprar</strong>
             </Button>
@@ -57,6 +65,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
     return {
       props: {
+        id: data.id,
         name: data.name,
         price: data.price,
         description: data.description,

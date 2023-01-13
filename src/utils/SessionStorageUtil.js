@@ -24,3 +24,17 @@ export function addCart({ id, name, price, imageUrl }) {
 
   setCartInSessionStorage(cart);
 }
+
+export function updateItemCartQuantity(itemId, quantity) {
+  let cart = getCartFromSessionStorage();
+
+  const cartItem = cart.find((itemCart) => itemCart.id === itemId);
+
+  if (cartItem && quantity > 0) {
+    cartItem.quantity = quantity;
+  } else if (cartItem) {
+    cart = cart.filter((cartItem) => cartItem.id !== itemId);
+  }
+
+  setCartInSessionStorage(cart);
+}

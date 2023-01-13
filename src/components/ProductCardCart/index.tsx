@@ -1,5 +1,10 @@
-import { ReactNode } from "react";
-import { getCartFromSessionStorage } from "../../utils/SessionStorageUtil";
+import { ReactNode, useEffect, useState } from "react";
+import Router from "next/router";
+import {
+  getCartFromSessionStorage,
+  minusQuantityItem,
+  updateItemCartQuantity,
+} from "../../utils/SessionStorageUtil";
 import {
   Button,
   Container,
@@ -9,11 +14,13 @@ import {
   Quantity,
   QuantityWrapper,
   Title,
+  Wrapper,
 } from "./styles";
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined";
 
 interface ProductCardCartProps {
+  id: number;
   imageUrl: string;
   name: string;
   price: string;
@@ -21,6 +28,7 @@ interface ProductCardCartProps {
 }
 
 export function ProductCardCart({
+  id,
   imageUrl,
   name,
   price,
@@ -29,18 +37,40 @@ export function ProductCardCart({
   const nameSplited = name.split(" ");
   name = nameSplited[0] + " " + nameSplited[1];
 
+  const [quantityState, setQuatityState] = useState(quantity);
+
+  function handleMinusItemQuantity() {
+    if (quantityState > 0) {
+      setQuatityState(quantityState - 1);
+    }
+  }
+
+  function handlePlusItemQuantity() {
+    setQuatityState(quantityState + 1);
+  }
+
+  function handleClickProductDetail() {
+    Router.push("/product/" + id);
+  }
+
+  useEffect(() => {
+    updateItemCartQuantity(id, quantityState);
+  }, [quantityState]);
+
   return (
     <Container>
-      <Image src={imageUrl} alt="" />
+      <Image onClick={handleClickProductDetail} src={imageUrl} alt="" />
       <InformationContainer>
-        <Title>{name}</Title>
-        <Price>R$ {price}</Price>
+        <Wrapper onClick={handleClickProductDetail}>
+          <Title>{name}</Title>
+          <Price>R$ {price}</Price>
+        </Wrapper>
         <QuantityWrapper>
-          <Button>
+          <Button onClick={handleMinusItemQuantity}>
             <IndeterminateCheckBoxOutlinedIcon style={{ fontSize: "2rem" }} />
           </Button>
-          <Quantity>{quantity}</Quantity>
-          <Button>
+          <Quantity>{quantityState}</Quantity>
+          <Button onClick={handlePlusItemQuantity}>
             <LocalHospitalOutlinedIcon
               style={{
                 fontSize: "2rem",
