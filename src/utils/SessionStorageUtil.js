@@ -1,9 +1,8 @@
 export function getCartFromSessionStorage() {
-  let cart = JSON.parse(sessionStorage.getItem("cart"));
-
-  if (!cart) {
-    cart = [];
-  }
+  let cart = [];
+  try {
+    cart = JSON.parse(window.sessionStorage.getItem("cart"));
+  } catch (e) {}
 
   return cart;
 }

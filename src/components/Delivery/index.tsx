@@ -5,16 +5,25 @@ import {
   rastrearEncomendas,
 } from "correios-brasil";
 
-import { Container } from "./styles";
+import {
+  AddressContainer,
+  Container,
+  Input,
+  LabelOption,
+  Option,
+  OptionsContainer,
+  OptionWrapper,
+} from "./styles";
+import axios from "axios";
 
 interface DeliveryProps {}
 
 export function Delivery({}: DeliveryProps) {
   const [address, setAddress] = useState();
-  const deliveryOptions = [];
+  const [deliveryOptions, setDeliveryOptions] = useState([]);
+  const [deliveryOptionSelected, setDeliveryOptionSelected] = useState([]);
 
   function handleInput({ target, key }) {
-    console.log(target);
     if (key === "Enter") {
       consultarCep(target.value).then((response) => {
         setAddress(response);
@@ -22,45 +31,53 @@ export function Delivery({}: DeliveryProps) {
     }
   }
 
-  useEffect(() => {
-    const cep = address ? address.cep : 0;
-    let args = {
-      sCepOrigem: "81200100",
-      sCepDestino: cep,
-      nVlPeso: "1",
-      nCdFormato: "1",
-      nVlComprimento: "20",
-      nVlAltura: "20",
-      nVlLargura: "20",
-      nCdServico: ["04014", "04510"], //Array com os códigos de serviço
-      nVlDiametro: "0",
-    };
+  function handleCheck({ target }) {
+    setDeliveryOptionSelected(target.value);
+  }
 
-    calcularPrecoPrazo(args).then((response) => {
-      console.log(response);
-    });
+  useEffect(() => {
+    if (address && address.cep) {
+      axios
+        .get("http://0.0.0.0:8080/deliveries/delivery-options/" + address.cep)
+        .then((r) => {
+          setDeliveryOptions(r.data);
+        });
+    }
   }, [address]);
 
   return (
     <Container>
-      <h1>Delivery</h1>
       {address ? (
-        <>
-          <h1>
-            {address.localidade} - {address.uf}
-          </h1>
-          <h2>
-            {address.logradouro} - {address.bairro}
-          </h2>
-          <h3>{address.cep}</h3>
-        </>
+        <AddressContainer>
+          <p>
+            {address.logradouro} - {address.bairro} - {address.localidade} -
+            {address.uf}
+          </p>
+        </AddressContainer>
       ) : (
         <>
-          <label htmlFor="">CEP</label>
-          <input type="text" onKeyDown={handleInput} />
+          <label>Entrega para:</label>
+          <Input placeholder="CEP" type="text" onKeyDown={handleInput} />
         </>
       )}
-      {deliveryOptions.map((option) => {})}
+      <OptionsContainer>
+        {deliveryOptions.map((option) => {
+          return (
+            <OptionWrapper>
+              <Option
+                onChange={handleCheck}
+                name="deliveryOption"
+                type="radio"
+                value={option.code}
+                id={option.code}
+              />
+              <LabelOption htmlFor={option.code}>
+                {option.type} {option.deadline} R$ {option.price}
+              </LabelOption>
+            </OptionWrapper>
+          );
+        })}
+      </OptionsContainer>
     </Container>
   );
 }
